@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Akka.Actor;
-using Akka.Dispatch;
 using Akka.Remote.TestKit;
 using Akka.Routing;
 using Akka.TestKit;
@@ -177,9 +176,7 @@ namespace Akka.Remote.Tests.MultiNode.Router
                     EnterBarrier("start");
                     var actor = Sys.ActorOf(new RoundRobinPool(
                         nrOfInstances: 1,
-                        resizer: new TestResizer(),  
-                        supervisorStrategy: Pool.DefaultSupervisorStrategy,
-                        routerDispatcher: Dispatchers.DefaultDispatcherId
+                        resizer: new TestResizer()
                         ).Props(Props.Create<SomeActor>()), "service-hello2");
                     actor.Should().BeOfType<RoutedActorRef>();
 
